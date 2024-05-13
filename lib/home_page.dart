@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     final filter = filters[index];
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
