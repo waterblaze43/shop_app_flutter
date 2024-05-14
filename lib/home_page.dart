@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import "package:shop_app_flutter/global_variables.dart";
+import "package:shop_app_flutter/product_card.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -76,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     final filter = filters[index];
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -109,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                           side: const BorderSide(
                               color: Color.fromRGBO(245, 247, 249, 1)),
                           backgroundColor: filter == selectedFilter
-                              ? const Color.fromARGB(255, 238, 196, 32)
+                              ? Theme.of(context).colorScheme.primary
                               : const Color.fromRGBO(245, 247, 249, 1),
                         ),
                       ),
@@ -118,8 +120,23 @@ class _HomePageState extends State<HomePage> {
             ),
             cookie
                 ? const Text("Developer")
-                : const Expanded(
-                    child: Placeholder(),
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: products.length,
+                      clipBehavior: Clip.antiAlias,
+                      itemBuilder: (context, index) {
+                        final Map<String, dynamic> product = products[index];
+
+                        return ProductCard(
+                          title: product["title"],
+                          price: product["price"],
+                          image: product["imageUrl"],
+                          cardColor: index.isEven
+                              ? const Color.fromRGBO(216, 240, 253, 1)
+                              : const Color.fromRGBO(245, 247, 249, 1),
+                        );
+                      },
+                    ),
                   ),
           ],
         ),
