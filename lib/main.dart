@@ -15,19 +15,28 @@ class MyApp extends StatelessWidget {
       title: "Shop App",
       home: const HomePage(),
       theme: ThemeData(
-          fontFamily: "Lato",
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromRGBO(254, 204, 1, 1),
-              primary: const Color.fromRGBO(254, 204, 1, 1)),
-          inputDecorationTheme: const InputDecorationTheme(
-            hintStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            prefixIconColor: Color.fromARGB(255, 117, 115, 115),
-            //contentPadding: EdgeInsets.all(20)),
+        fontFamily: "Lato",
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromRGBO(254, 204, 1, 1),
+            primary: const Color.fromRGBO(254, 204, 1, 1)),
+        inputDecorationTheme: const InputDecorationTheme(
+          hintStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          prefixIconColor: Color.fromARGB(255, 117, 115, 115),
+          //contentPadding: EdgeInsets.all(20)),
+        ),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+          titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          titleSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            color: Colors.black,
           ),
-          textTheme: const TextTheme(
-            titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            titleSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          )),
+        ),
+        useMaterial3: true,
+      ),
     );
   }
 }

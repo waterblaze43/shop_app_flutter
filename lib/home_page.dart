@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:shop_app_flutter/global_variables.dart";
 import "package:shop_app_flutter/product_card.dart";
+import "package:shop_app_flutter/product_details_page.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,11 +36,11 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(20.0),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: Text(
                     "Shoes\nCollection",
-                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 Expanded(
@@ -127,13 +128,25 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         final Map<String, dynamic> product = products[index];
 
-                        return ProductCard(
-                          title: product["title"],
-                          price: product["price"],
-                          image: product["imageUrl"],
-                          cardColor: index.isEven
-                              ? const Color.fromRGBO(216, 240, 253, 1)
-                              : const Color.fromRGBO(245, 247, 249, 1),
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ProductDetailsPage(
+                                      product: product as Map<String, Object>);
+                                },
+                              ),
+                            );
+                          },
+                          child: ProductCard(
+                            title: product["title"],
+                            price: product["price"],
+                            image: product["imageUrl"],
+                            cardColor: index.isEven
+                                ? const Color.fromRGBO(216, 240, 253, 1)
+                                : const Color.fromRGBO(245, 247, 249, 1),
+                          ),
                         );
                       },
                     ),
