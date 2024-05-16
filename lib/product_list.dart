@@ -24,6 +24,7 @@ class _ProductListState extends State<ProductList> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     const border = BorderSide(
       width: 2,
       style: BorderStyle.solid,
@@ -120,34 +121,73 @@ class _ProductListState extends State<ProductList> {
           cookie
               ? const Text("Developer")
               : Expanded(
-                  child: ListView.builder(
-                    itemCount: products.length,
-                    clipBehavior: Clip.antiAlias,
-                    itemBuilder: (context, index) {
-                      final Map<String, dynamic> product = products[index];
+                  child: size.width <= 650
+                      ? ListView.builder(
+                          itemCount: products.length,
+                          clipBehavior: Clip.antiAlias,
+                          itemBuilder: (context, index) {
+                            final Map<String, dynamic> product =
+                                products[index];
 
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return ProductDetailsPage(
-                                    product: product as Map<String, Object>);
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return ProductDetailsPage(
+                                          product:
+                                              product as Map<String, Object>);
+                                    },
+                                  ),
+                                );
                               },
-                            ),
-                          );
-                        },
-                        child: ProductCard(
-                          title: product["title"],
-                          price: product["price"],
-                          image: product["imageUrl"],
-                          cardColor: index.isEven
-                              ? const Color.fromRGBO(216, 240, 253, 1)
-                              : const Color.fromRGBO(245, 247, 249, 1),
+                              child: ProductCard(
+                                title: product["title"],
+                                price: product["price"],
+                                image: product["imageUrl"],
+                                cardColor: index.isEven
+                                    ? const Color.fromRGBO(216, 240, 253, 1)
+                                    : const Color.fromRGBO(245, 247, 249, 1),
+                              ),
+                            );
+                          },
+                        )
+                      : GridView.builder(
+                          itemCount: products.length,
+                          clipBehavior: Clip.antiAlias,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio:
+                                MediaQuery.of(context).size.width * 0.0015,
+                          ),
+                          itemBuilder: (context, index) {
+                            final Map<String, dynamic> product =
+                                products[index];
+
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return ProductDetailsPage(
+                                          product:
+                                              product as Map<String, Object>);
+                                    },
+                                  ),
+                                );
+                              },
+                              child: ProductCard(
+                                title: product["title"],
+                                price: product["price"],
+                                image: product["imageUrl"],
+                                cardColor: index.isEven
+                                    ? const Color.fromRGBO(216, 240, 253, 1)
+                                    : const Color.fromRGBO(245, 247, 249, 1),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
         ],
       ),
