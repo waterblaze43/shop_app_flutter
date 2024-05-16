@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:shop_app_flutter/cart_provider.dart";
 
 class ProductDetailsPage extends StatefulWidget {
   const ProductDetailsPage({super.key, required this.product});
@@ -84,7 +86,26 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   height: 20,
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (selectedSize != 0) {
+                      widget.product["size"] = selectedSize;
+                      Provider.of<CartProvider>(context, listen: false)
+                          .addProduct(widget.product);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Product Added Succesfully."),
+                          duration: Durations.extralong3,
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Please Select A Size."),
+                          duration: Durations.extralong3,
+                        ),
+                      );
+                    }
+                  },
                   icon: const Icon(Icons.shopping_cart_outlined),
                   label: const Text("Add to Cart"),
                   style: ElevatedButton.styleFrom(

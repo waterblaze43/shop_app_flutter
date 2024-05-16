@@ -1,0 +1,50 @@
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:shop_app_flutter/cart_provider.dart";
+
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  @override
+  Widget build(BuildContext context) {
+    final cartProv = Provider.of<CartProvider>(context);
+    final cart = cartProv.cart;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Cart"),
+      ),
+      body: Center(
+        child: ListView.builder(
+          itemCount: cart.length,
+          itemBuilder: (context, index) {
+            final cartItem = cart[index];
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundImage: AssetImage(cartItem["imageUrl"] as String),
+                radius: 30,
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  cartProv.removeProduct(cart[index]);
+                },
+                icon: const Icon(Icons.delete),
+                color: Colors.red,
+              ),
+              title: Text(
+                cartItem["title"] as String,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              subtitle: Text("Size: ${cartItem["size"]}"),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
